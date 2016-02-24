@@ -1,15 +1,20 @@
 class ProgramsController < ApplicationController
 
    def index
-    @programs = Program.all
+    @programs = Program.all.order(:title)
     # query = "%%"
     # @results = Program.find_by_sql(["SELECT * FROM programs p WHERE lower(p.title) LIKE ? ", query ])
+  end
+
+  def by_genre
+    @programs = Program.all.order(:genre)
     render json: @programs
   end
 
-  # def show
-  #   @program = Program.find(params[:id])
-  # end
+  def by_network
+    @programs = Program.all.order(:network)
+    render json: @programs
+  end
 
   # def new
   #   @program = Program.new

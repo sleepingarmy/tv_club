@@ -2,9 +2,8 @@ Rails.application.routes.draw do
 
   root 'programs#index'
 
-  resources :networks
-  resources :programs
-  resources :episodes
+  get 'programs/by_genre' => 'programs#by_genre'
+  get 'programs/by_network' => 'programs#by_network'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

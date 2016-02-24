@@ -1,11 +1,14 @@
 class Programs extends React.Component {
   constructor (props) {
     super(props);
-    this.state =  { programs: this.props.programs, showAdd: false, sortTitle: true, sortNetwork: false, sortGenre: false }
+    this.state =  { programs: this.props.programs, showAdd: false }
     this.newProgram = this.newProgram.bind(this);
     this.removeProgram = this.removeProgram.bind(this);
     this.showAddForm = this.showAddForm.bind(this);
     this.addProgramForm = this.addProgramForm.bind(this);
+    this.sortByGenre = this.sortByGenre.bind(this);
+    this.sortByNetwork = this.sortByNetwork.bind(this);
+    this.sortByTitle = this.sortByTitle.bind(this);
   }
 
   // componentDidMount () {
@@ -81,16 +84,35 @@ class Programs extends React.Component {
     })
   }
 
-  sortGenre(){
-    let sortColumnName = "genre"
-    this.setState({ sortGenre: true, sortTitle: false, sortNetwork: false})
-
+  sortByGenre(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/programs/by_genre',
+      type: 'GET'
+    }).success( data => {
+      this.setState({ programs: data })
+    })
   }
 
-  sortNetwork(){
-    this.setState({ sortGenre: false, sortTitle: false, sortNetwork: true})
+  sortByNetwork(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/programs/by_network',
+      type: 'GET'
+    }).success( data => {
+      this.setState({ programs: data })
+    })
   }
 
+  sortByTitle(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/programs',
+      type: 'GET'
+    }).success( data => {
+      this.setState({ programs: data })
+    })
+  }
 
   render () {
     let programs = this.state.programs.map( program => {
@@ -98,15 +120,16 @@ class Programs extends React.Component {
       return(<Program key={key} removeProgram={this.removeProgram} editprogram={this.editProgram} {...program} />);
     });
 
-    return (<div className='main'>
-              <h1 onClick={this.showAddForm}> Add Programs </h1>
-              {this.addProgramForm()}
-              <h1> Programs </h1>
-              <p onClick={ this.sortGenre} > sort by genre </p>
-              <p onClick={ this.sortNetwork} > sort by network </p>
+    return(<div>
+          <h1 onClick={this.showAddForm}> Add Programs </h1>
+          {this.addProgramForm()}
+          <h1> Programs </h1>
+          <span onClick={ this.sortByTitle} > Sort by Title </span>
+          <span onClick={ this.sortByGenre} > Sort by Genre </span>
+          <span onClick={ this.sortByNetwork} > Sort by Network </span>
 
-              {programs}
-           </div>);
+          {programs}
+       </div>);
   }
 }
 
