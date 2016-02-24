@@ -118,36 +118,59 @@ class Programs extends React.Component {
       type: 'GET',
       data: {search_term: this.refs.search.value}
     }).success( data => {
-      this.setState({ programs: data })
+      if (data.length == 0) {
+        this.setState({ programs: false })
+      } else {
+        this.setState({ programs: data })
+      };
     }).error( data => {
-      alert(data);
+      alert('error');
+      debugger
     })
   }
 
   render () {
-    let programs = this.state.programs.map( program => {
-      let key = `program-${program.id}`;
-      return(<Program key={key} removeProgram={this.removeProgram} editprogram={this.editProgram} {...program} />);
-    });
-    return(<div>
-          <h1 onClick={this.showAddForm}> Add Programs </h1>
-          {this.addProgramForm()}
-          <div className='container-fluid'>
-            <div className='row'>
-              <h1 > Programs </h1>
-              <form className='search'> 
-                <input onChange={this.searchPrograms} type='text' ref='search' placeholder='Title' />
-                <button type='submit'> Search </button>
-              </form>
-            </div>
-            <div className='row'>
-              <h4 className='col-md-4' onClick={ this.sortByTitle} > Sort by Title </h4>
-              <h4 className='col-md-4' onClick={ this.sortByGenre} > Sort by Genre </h4>
-              <h4 className='col-md-4' onClick={ this.sortByNetwork} > Sort by Network </h4>
-            </div>
-            {programs}
-          </div>
-       </div>);
+    if (this.state.programs) {
+      let programs = this.state.programs.map( program => {
+        let key = `program-${program.id}`;
+        return(<Program key={key} removeProgram={this.removeProgram} editprogram={this.editProgram} {...program} />);
+      });
+      return(<div>
+              <h1 onClick={this.showAddForm}> Add Programs </h1>
+              {this.addProgramForm()}
+              <div className='container-fluid'>
+                <div className='row'>
+                  <h1 > Programs </h1>
+                  <form className='search'> 
+                    <input onChange={this.searchPrograms} type='text' ref='search' placeholder='Title' />
+                    <button type='submit'> Search </button>
+                  </form>
+                </div>
+                <div className='row'>
+                  <h4 className='col-md-4' onClick={ this.sortByTitle} > Sort by Title </h4>
+                  <h4 className='col-md-4' onClick={ this.sortByGenre} > Sort by Genre </h4>
+                  <h4 className='col-md-4' onClick={ this.sortByNetwork} > Sort by Network </h4>
+                </div>
+                {programs}
+              </div>
+           </div>)
+    } else {
+      return(<div>
+              <h1 onClick={this.showAddForm}> Add Programs </h1>
+              {this.addProgramForm()}
+              <div className='container-fluid'>
+                <div className='row'>
+                  <h1 > Programs </h1>
+                  <form className='search'> 
+                    <input onChange={this.searchPrograms} type='text' ref='search' placeholder='Title' />
+                    <button type='submit'> Search </button>
+                  </form>
+                  <p> Oh no!  It looks like we don't have the program you're looking for. </p>
+                  <p> To get it added to the database, contact us! </p>
+                </div>
+              </div>
+           </div>)
+    };
   }
 }
 
