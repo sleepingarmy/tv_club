@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   root 'programs#index'
 
+  resources :episodes
+  resources :networks
+
   get 'programs' => 'programs#index'
   get 'programs/by_genre' => 'programs#by_genre'
   get 'programs/by_network' => 'programs#by_network'

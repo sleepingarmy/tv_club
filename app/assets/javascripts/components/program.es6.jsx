@@ -44,10 +44,10 @@ class Program extends React.Component {
               </div>);
     } else {
       return(<div className='program-box'>
-               <div className='row '>
-                 <h4 className='col-md-4'> <b> {this.props.title} </b> </h4>
-                 <h5 className='col-md-4 program-genre'> {this.props.genre} </h5>
-                 <h5 className='col-md-4 program-network'> {this.props.network} </h5>
+               <div className='row'>
+                 <h4 className='col m4 '> <b> {this.props.title} </b> </h4>
+                 <h5 className='col m4 grey-text program-genre'> {this.props.genre} </h5>
+                 <h5 className='col m4 grey-text program-network'> {this.props.network} </h5>
                </div>
                <div>
                  <p className='program-desc'> {this.props.description} </p>

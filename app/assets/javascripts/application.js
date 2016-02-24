@@ -11,9 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require materialize-sprockets
 //= require jquery_ujs
-//= require bootstrap-sprockets
 //= require react
 //= require react_ujs
 //= require components
 //= require_tree .
+
+
+  $('#textarea1').val('New Text');
+  $('#textarea1').trigger('autoresize');

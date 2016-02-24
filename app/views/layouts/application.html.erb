@@ -8,6 +8,20 @@
 </head>
 <body>
 
+  <nav class='black'>
+    <div class='nav-wrapper'>
+      <%= link_to 'TV Club', programs_path, class: 'brand-logo white-text' %>
+      <ul id='nav-mobile' class='right hide-on-med-and-down'>
+        <li>
+          <%= link_to 'episodes', episodes_path, class: 'white-text' %>
+        </li>
+        <li>
+          <%= link_to 'networks', networks_path, class: 'white-text' %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
 <%= yield %>
 
 </body>

@@ -10,33 +10,31 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require_self
+ *= require_tree .
  */
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
+@import "materialize/components/color";
+$primary-color: black !default;
+$secondary-color: #c51162 !default;
+@import "materialize";
 
 /*==================CUSTOM==================*/
 
 body {
   font-family: Lucinda Grande;
   background-color: #ebebeb;
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 .program-box {
   background-color: white;
-  padding: 5px 5px 5px 5px;
+  margin: 5px 10px 5px 10px;
 }
 
-.program-genre, .program-network {
-  color: #ababab;
-}
+/*==========materialize=========*/
 
-/*===========bootstrap overrides===========*/
 
-.btn, .btn-default {
-  border-radius: 0px !important;
-  border-color: white;
-}
+
+
+
+
