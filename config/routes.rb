@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'programs/by_genre' => 'programs#by_genre'
   get 'programs/by_network' => 'programs#by_network'
   get 'programs/by_title' => 'programs#by_title'
+  get 'programs/search' => 'programs#search'
 
   post 'programs' => 'programs#create'
 

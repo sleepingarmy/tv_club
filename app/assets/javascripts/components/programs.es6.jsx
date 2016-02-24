@@ -9,6 +9,7 @@ class Programs extends React.Component {
     this.sortByGenre = this.sortByGenre.bind(this);
     this.sortByNetwork = this.sortByNetwork.bind(this);
     this.sortByTitle = this.sortByTitle.bind(this);
+    this.searchPrograms = this.searchPrograms.bind(this);
   }
 
   // componentDidMount () {
@@ -110,17 +111,35 @@ class Programs extends React.Component {
     })
   }
 
+  searchPrograms(e){
+    e.preventDefault();
+    $.ajax({
+      url: '/programs/search',
+      type: 'GET',
+      data: {search_term: this.refs.search.value}
+    }).success( data => {
+      this.setState({ programs: data })
+    }).error( data => {
+      alert(data);
+    })
+  }
+
   render () {
     let programs = this.state.programs.map( program => {
       let key = `program-${program.id}`;
       return(<Program key={key} removeProgram={this.removeProgram} editprogram={this.editProgram} {...program} />);
     });
-
     return(<div>
           <h1 onClick={this.showAddForm}> Add Programs </h1>
           {this.addProgramForm()}
           <div className='container-fluid'>
-            <h1 > Programs </h1>
+            <div className='row'>
+              <h1 > Programs </h1>
+              <form className='search'> 
+                <input onChange={this.searchPrograms} type='text' ref='search' placeholder='Title' />
+                <button type='submit'> Search </button>
+              </form>
+            </div>
             <div className='row'>
               <h4 className='col-md-4' onClick={ this.sortByTitle} > Sort by Title </h4>
               <h4 className='col-md-4' onClick={ this.sortByGenre} > Sort by Genre </h4>
