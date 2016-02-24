@@ -39,7 +39,7 @@ class Programs extends React.Component {
               <textarea placeholder='Description' type='text' ref='description' /><br />
               <input placeholder='Number of Seasons' type='number' min='1' max='100' step='1' ref='seasons' /><br />
               <input placeholder='Air Day' type='text' ref='weekday' /><br />
-              <button type='submit'> Submit </button>
+              <button className='btn btn-default' type='submit'> Submit </button>
             </form>
            </div>)
     }
@@ -51,10 +51,6 @@ class Programs extends React.Component {
       type: 'POST',
       data: {program: {title: this.refs.title.value, description: this.refs.description.value, genre: this.refs.genre.value, network: this.refs.network.value, num_of_seasons: this.refs.seasons.value, weekday: this.refs.weekday.value}}
     }).success( data => {
-      let programs = this.state.programs;
-      programs.unshift(data.programs);
-      this.refs.title.value = null;
-      debugger
       this.setState({ programs: programs })
     }).error( data => {
       console.log('error');
@@ -107,7 +103,7 @@ class Programs extends React.Component {
   sortByTitle(e){
     e.preventDefault();
     $.ajax({
-      url: '/programs',
+      url: '/programs/by_title',
       type: 'GET'
     }).success( data => {
       this.setState({ programs: data })
@@ -123,12 +119,15 @@ class Programs extends React.Component {
     return(<div>
           <h1 onClick={this.showAddForm}> Add Programs </h1>
           {this.addProgramForm()}
-          <h1> Programs </h1>
-          <span onClick={ this.sortByTitle} > Sort by Title </span>
-          <span onClick={ this.sortByGenre} > Sort by Genre </span>
-          <span onClick={ this.sortByNetwork} > Sort by Network </span>
-
-          {programs}
+          <div className='container-fluid'>
+            <h1 > Programs </h1>
+            <div className='row'>
+              <h4 className='col-md-4' onClick={ this.sortByTitle} > Sort by Title </h4>
+              <h4 className='col-md-4' onClick={ this.sortByGenre} > Sort by Genre </h4>
+              <h4 className='col-md-4' onClick={ this.sortByNetwork} > Sort by Network </h4>
+            </div>
+            {programs}
+          </div>
        </div>);
   }
 }

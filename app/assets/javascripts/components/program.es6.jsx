@@ -4,19 +4,20 @@ class Program extends React.Component {
     super(props);
     this.state = { edit: false }
     this.toggleEdit = this.toggleEdit.bind(this);
-    this.updateItem = this.updateItem.bind(this);
+    this.updateProgram = this.updateProgram.bind(this);
   }
 
   toggleEdit(){
     this.setState({edit: !this.state.edit});
   }
 
-  updateItem(id){
+  updateProgram(id){
     $.ajax({
       url: '/programs/' + id,
       type: 'PUT',
       data: {program: {title: this.refs.title.value, description: this.refs.description.value, genre: this.refs.genre.value, network: this.refs.network.value, num_of_seasons: this.refs.seasons.value, weekday: this.refs.weekday.value}} 
     }).success( data => {
+      alert('worked!');
       this.setState({ edit: false });
     }).error( data => {
       alert(data);
@@ -27,7 +28,7 @@ class Program extends React.Component {
     if (this.state.edit){
       return (<div className='program-box'>
                 <p> * indicates required field </p>
-                <form onSubmit={this.updateItem.bind(this, this.props.id)}>
+                <form onSubmit={this.updateProgram.bind(this, this.props.id)}>
                 <span> * </span>
                   <input autoFocus={true} type='text' defaultValue={this.props.title} ref='title' /><br />
                   <span> * </span>
@@ -43,13 +44,16 @@ class Program extends React.Component {
               </div>);
     } else {
       return(<div className='program-box'>
-             <h4><b> {this.props.title} </b></h4>
-             <h5 className='program-genre'> {this.props.genre} </h5>
-             <h5 className='program-network'> {this.props.network} </h5>
-             <p className='program-desc'> {this.props.description} </p>
-             <a onClick={() => this.props.removeProgram(this.props.id)}><em>Remove Program</em></a><br />
-             <a onClick={this.toggleEdit}><em>Edit Program</em></a>
-
+               <div className='row '>
+                 <h4 className='col-md-4'> <b> {this.props.title} </b> </h4>
+                 <h5 className='col-md-4 program-genre'> {this.props.genre} </h5>
+                 <h5 className='col-md-4 program-network'> {this.props.network} </h5>
+               </div>
+               <div>
+                 <p className='program-desc'> {this.props.description} </p>
+                 <a onClick={() => this.props.removeProgram(this.props.id)}><em>Remove Program</em></a><br />
+                 <a onClick={this.toggleEdit}><em>Edit Program</em></a>
+              </div>
            </div>);
   }
   }

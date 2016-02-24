@@ -6,6 +6,11 @@ class ProgramsController < ApplicationController
     # @results = Program.find_by_sql(["SELECT * FROM programs p WHERE lower(p.title) LIKE ? ", query ])
   end
 
+  def by_title
+    @programs = Program.all.order(:title)
+    render json: @programs
+  end
+
   def by_genre
     @programs = Program.all.order(:genre)
     render json: @programs
@@ -50,7 +55,7 @@ class ProgramsController < ApplicationController
   private
 
   def program_params
-    params.require(:program).permit(:title, :description, :genre, :num_of_seasons, :rating, :weekday, :network)
+    params.require(:program).permit(:title, :genre, :network, :description, :num_of_seasons, :rating, :weekday)
   end
 
 end
