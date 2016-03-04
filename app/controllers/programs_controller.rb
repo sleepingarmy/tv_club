@@ -2,6 +2,7 @@ class ProgramsController < ApplicationController
 
    def index
     @programs = Program.all.order(:title)
+    @network_numbers = Program.group(:network).count
   end
 
   def by_title
@@ -17,6 +18,10 @@ class ProgramsController < ApplicationController
   def by_network
     @programs = Program.all.order(:network)
     render json: @programs
+  end
+
+  def show
+    @program = Program.find(params[:id])
   end
 
   # def new
@@ -54,7 +59,6 @@ class ProgramsController < ApplicationController
     # @results = Program.find_by_sql(["SELECT * FROM programs p WHERE lower(p.title) LIKE ? ", query ])
     # binding.pry
     # @programs = Program.find_by_sql(["SELECT * FROM programs p WHERE lower(p.title) LIKE ? ", query ])
-
     search_term = params[:search_term]
     query = "%#{search_term}%"
     @results = Program.find_by_sql(["SELECT * FROM programs p WHERE lower(p.title) LIKE ? ", query ])

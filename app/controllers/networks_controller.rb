@@ -34,6 +34,7 @@ class NetworksController < ApplicationController
     else
       flash[:message] = "Unable to save changes, please try again."
       render :edit
+    end
   end
 
   def destroy

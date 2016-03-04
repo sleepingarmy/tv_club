@@ -1,7 +1,7 @@
 class EpisodesController < ApplicationController
 
-   def index
-    @episodes = Episode.all
+  def index
+    @episodes = Episode.all.order(:id)
   end
 
   def show
@@ -14,12 +14,14 @@ class EpisodesController < ApplicationController
 
   def create
     @episode = Episode.new(episode_params)
+    binding.pry
+    @episode.network_id = Program.where(title: params[:network]).id 
     if @episode.save
       flash[:message] = "episode created successfully!"
-      redirect_to episodes_path
+      render json: Episode.all
     else
-      flash[:error] =  "Unable to create episode, please try again"
-      render :new
+      flash[:error] =  "Unable to create episode. Make sure to include all required fields."
+      render json: Episode.all
     end
   end
 
@@ -34,6 +36,7 @@ class EpisodesController < ApplicationController
     else
       flash[:message] = "Unable to save changes, please try again."
       render :edit
+    end
   end
 
   def destroy

@@ -1,0 +1,12 @@
+%h1= @program.title
+= @program.network
+%br/
+= @program.genre
+- if @program.weekday.length > 1
+  %p
+    airs on #{@program.weekday}
+- if @program.num_of_seasons
+  %p
+    = @program.num_of_seasons
+    seasons
+= link_to 'view episodes', episodes_path

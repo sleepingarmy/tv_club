@@ -12,67 +12,36 @@ class Programs extends React.Component {
     this.searchPrograms = this.searchPrograms.bind(this);
   }
 
-  // componentDidMount () {
-  //   $.ajax({
-  //     url: '/programs',
-  //     type: 'GET'
-  //   }).success( data => {
-  //     debugger
-  //     this.setState({ programs: @programs });
-  //   })
-  // }
-
   showAddForm(){
     this.setState({showAdd: !this.state.showAdd });
   }
 
   addProgramForm(){
     if (this.state.showAdd) {
-      return(<div>
-            <p> * Indicates Required Field </p>
-            <div className='row'>
-              <form className='col m12' onSubmit={this.newProgram}>
-                <div className='row'>
-                  <div className='input-field col m6'>
+      return(<div className='row'>
+              <form onSubmit={this.newProgram}>
+                  <div className='col'>
+                    <p> * Indicates Required Field </p>
+                    <label> *Program Title </label><br />
                     <input type='text' ref='title' autoFocus='true' /><br />
-                    <label> *Program Title </label>
-                  </div>
-                  <div className='input-field col m6 validate'>
+                    <label> *Genre </label><br />
                     <input type='text' ref='genre' /><br />
-                    <label> *Genre </label>
-                  </div>
-                <div className='row>'>
-                  <div className='input-field col m12 validate'>
+                    <label> *Network </label><br />
                     <input type='text' ref='network' /><br />
-                    <label> *Network </label>
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='input-field col m12'>
+                    <label> Description </label><br />
                     <textarea className='materialize-textarea' type='text' ref='description' /><br />
-                    <label> Description </label>
-                  </div>
-                </div>
-                <div className='row'>
-                  <div className='input-field col m12'>  
+                    <label> Air Day </label><br />
                     <input type='text' ref='weekday' /><br />
-                    <label> Air Day </label>
+                    <label> Seasons </label><br />
+                    <input type='number' min='1' max='100' step='1' ref='seasons' /><br />
+                    <button className='btn' type='submit'> Submit </button>
                   </div>
-                </div>
-                <div classsName='row'>
-                  <div className='number-field col m12'>
-                    <input placeholder='Number of Seasons' type='number' min='1' max='100' step='1' ref='seasons' /><br />
-                  </div>
-                </div>
-                  <button className='btn' type='submit'> Submit </button>
-                </div>
               </form>
-            </div>
-           </div>)
+           </div>);
     }
   }
 
-  newProgram () {
+  newProgram(){
     $.ajax({
       url: '/programs',
       type: 'POST',
@@ -161,61 +130,54 @@ class Programs extends React.Component {
         return(<Program key={key} removeProgram={this.removeProgram} editprogram={this.editProgram} {...program} />);
       });
       return(<div>
-              <div className='container-fluid'>
+              <div className='container'>
                 <div className='row'>
-                  <div className='col m12'>
+                    <form className='search'> 
+                      <input onChange={this.searchPrograms} placeholder='Search Our Shows' type='text' ref='search' />
+                    </form>
+                </div>
+                <div className='row'>
+                  <div className='col'>
                     <h1 onClick={this.showAddForm}> Add Programs </h1>
                     {this.addProgramForm()}
                   </div>
                 </div>
-                <div className='row'>
-                  <div className='col m6'>
-                    <h1> Programs </h1>
-                  </div>
-                  <div className='col m6'>
-                    <form className='search'> 
-                      <div className='input-field col m12'>
-                        <input onChange={this.searchPrograms} type='text' ref='search' />
-                        <label> Search Our Shows </label>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div className='row'>
-                  <h4 className='col m4' onClick={ this.sortByTitle} > Sort by Title </h4>
-                  <h4 className='col m4' onClick={ this.sortByGenre} > Sort by Genre </h4>
-                  <h4 className='col m4' onClick={ this.sortByNetwork} > Sort by Network </h4>
-                </div>
-                {programs}
               </div>
+              <div className='row center'>
+                <h1> Programs </h1>
+              </div>  
+              <div className='row center'>
+                <h4 onClick={ this.sortByTitle} > Sort by Title </h4>
+                <h4 onClick={ this.sortByGenre} > Sort by Genre </h4>
+                <h4 onClick={ this.sortByNetwork} > Sort by Network </h4>
+              </div>
+              {programs}
            </div>)
     } else {
       return(<div>
-              <div className='container-fluid'>
+
+              <div className='container'>
                 <div className='row'>
-                  <div className='col m12'>
+                    <form className='search'> 
+                      <input onChange={this.searchPrograms} placeholder='Search Our Shows' type='text' ref='search' />
+                    </form>
+                </div>
+                <div className='row'>
+                  <div className='col'>
                     <h1 onClick={this.showAddForm}> Add Programs </h1>
                     {this.addProgramForm()}
                   </div>
                 </div>
-                <div className='row'>
-                  <div className='col m6'>
-                    <h1> Programs </h1>
-                  </div>
-                  <div className='col m6'>
-                    <form className='search'> 
-                      <div className='input-field col m12'>
-                        <input onChange={this.searchPrograms} type='text' ref='search' />
-                        <label> Search Our Shows </label>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div className='row'>
-                  <p> Oh no!  It looks like we don't have the program you're looking for. </p>
-                  <p> To get it added to the database, contact us! </p>
-                </div>
               </div>
+
+              <div className='row center'>
+                <h1> Programs </h1>
+              </div>  
+              <div className='row'>
+                <p> Oh no!  It looks like we don't have the program you're looking for. </p>
+                <p> To get it added to the database, contact us! </p>
+              </div>
+
            </div>)
     };
   }

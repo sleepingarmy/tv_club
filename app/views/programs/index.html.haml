@@ -1,0 +1,13 @@
+%p= flash[:message]
+%p= flash[:error]
+
+= react_component('Programs', programs: @programs)
+/
+  <p>this 'programs' component should only show up if you're an admin</p>
+  
+  <p>otherwise, just render a regular programs component that will show programs and let user sort based on title, network, air day, genre, etc.</p>
+
+- @network_numbers.each do |network|
+  %p
+    = "#{network[0]} has"
+    = "#{network[1]} shows in our database."

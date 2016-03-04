@@ -1,19 +1,21 @@
 Rails.application.routes.draw do
 
-  root 'programs#index'
+  root 'home#index'
 
-  resources :episodes
-  resources :networks
+  get 'programs/search' => 'programs#search'
+  get 'programs/by_network' => 'programs#by_network'
+  get 'programs/by_genre' => 'programs#by_genre'
 
   get 'programs' => 'programs#index'
-  get 'programs/by_genre' => 'programs#by_genre'
-  get 'programs/by_network' => 'programs#by_network'
+  get 'programs/:id' => 'programs#show'
   get 'programs/by_title' => 'programs#by_title'
-  get 'programs/search' => 'programs#search'
 
   post 'programs' => 'programs#create'
 
   put 'programs/:id' => 'programs#update'
+  
+  resources :episodes
+  resources :networks
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

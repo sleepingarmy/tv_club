@@ -17,7 +17,6 @@ class Program extends React.Component {
       type: 'PUT',
       data: {program: {title: this.refs.title.value, description: this.refs.description.value, genre: this.refs.genre.value, network: this.refs.network.value, num_of_seasons: this.refs.seasons.value, weekday: this.refs.weekday.value}} 
     }).success( data => {
-      alert('worked!');
       this.setState({ edit: false });
     }).error( data => {
       alert(data);
@@ -45,14 +44,14 @@ class Program extends React.Component {
     } else {
       return(<div className='program-box'>
                <div className='row'>
-                 <h4 className='col m4 '> <b> {this.props.title} </b> </h4>
-                 <h5 className='col m4 grey-text program-genre'> {this.props.genre} </h5>
-                 <h5 className='col m4 grey-text program-network'> {this.props.network} </h5>
+                 <a href={"/programs/" + this.props.id}><h4>{this.props.title} </h4></a>
+                 <h5 className='grey-text program-genre'> {this.props.genre} </h5>
+                 <h5 className='grey-text program-network'> {this.props.network} </h5>
                </div>
                <div>
                  <p className='program-desc'> {this.props.description} </p>
-                 <a onClick={() => this.props.removeProgram(this.props.id)}><em>Remove Program</em></a><br />
-                 <a onClick={this.toggleEdit}><em>Edit Program</em></a>
+                 <a onClick={() => this.props.removeProgram(this.props.id)}>Remove Program</a><br />
+                 <a onClick={this.toggleEdit}>Edit Program</a>
               </div>
            </div>);
   }
